@@ -2,6 +2,7 @@ package com.mycompany.futuretext;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
         TextView textview = new TextView(this);
         textview.setTextSize(20);
         textview.setText(messagePost);
+        textview.setMovementMethod(new ScrollingMovementMethod());
         setContentView(textview);
 
     }

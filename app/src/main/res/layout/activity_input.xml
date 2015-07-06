@@ -22,7 +22,8 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:hint="@string/edit_message"
-        android:nextFocusDown="@+id/sendLater"/>
+        android:imeOptions="actionDone"
+        android:singleLine="true"/>
     <Button android:id="@+id/sendNow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

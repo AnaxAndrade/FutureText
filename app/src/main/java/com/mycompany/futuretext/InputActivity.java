@@ -78,8 +78,6 @@ public class InputActivity extends ActionBarActivity {
 
     }
 
-    /*Broadcasts to AlarmReceiver to send SMS and passes and Intent to DisplayMessageActivity to show what
-    will be sent and when*/
     //called when user clicks send later button
     public void sendDelayedMessage(View view) {
 
