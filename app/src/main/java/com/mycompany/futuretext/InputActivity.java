@@ -2,11 +2,7 @@ package com.mycompany.futuretext;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
-import android.database.DataSetObserver;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
@@ -18,12 +14,9 @@ import android.widget.EditText;
 import android.view.View;
 import java.util.Calendar;
 import android.widget.Toast;
-import android.app.LoaderManager;
 import android.database.Cursor;
-import android.content.Loader;
-import android.content.CursorLoader;
 
-public class InputActivity extends ActionBarActivity /*implements LoaderManager.LoaderCallbacks<Cursor>*/  {
+public class InputActivity extends ActionBarActivity {
     public final static String EXTRA_MESSAGE = "com.mycompany.futuretext.MESSAGE";
     public final static String EXTRA_MESSAGEPOST = "com.mycompany.futuretext.MESSAGEPOST";
     public final static String EXTRA_RECIPIENT = "com.mycompany.futuretext.RECIPIENT";
@@ -120,7 +113,6 @@ public class InputActivity extends ActionBarActivity /*implements LoaderManager.
     //gets data from pickContactIntent, gets number from it and writes in number to get_recipients edittext
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         //check request code.
         if (requestCode == PICK_CONTACT_REQUEST) {
             //check to see if request was successful
