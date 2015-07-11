@@ -6,10 +6,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.TextView;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 
 public class DisplayMessageActivity extends ActionBarActivity {

@@ -20,11 +20,28 @@ public class AlarmReceiver extends BroadcastReceiver {
         String messagePost = intent.getStringExtra(InputActivity.EXTRA_MESSAGEPOST);
         String alarmID = intent.getStringExtra(InputActivity.EXTRA_ID);
 
-        //Sends sms with message
+        if (recipient.contains(",")) {
+            String[] recipients = recipient.split(",");
+            for(String i : recipients) {
+                sendSingleSMS(i, message);
+            }
+        }
+        else {
+            sendSingleSMS(recipient, message);
+        }
+
+        notifyUser(context, messagePost, alarmID);
+    }
+
+    //Sends sms with message
+    public void sendSingleSMS(String recipient, String message) {
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(recipient, null, message, null, null);
+    }
 
-        //creates notification at the time the sms is sent
+    //creates notification at the time the sms is sent
+    public void notifyUser(Context context, String messagePost, String alarmID) {
+
         NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(context);
         notifBuilder.setSmallIcon(R.drawable.notification_template_icon_bg);
         notifBuilder.setContentTitle("FutureText Message Sent");

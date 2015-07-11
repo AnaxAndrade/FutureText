@@ -127,9 +127,15 @@ public class InputActivity extends ActionBarActivity {
                 int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
                 String number = cursor.getString(column);
                 EditText getRecipient = (EditText) findViewById(R.id.get_recipients);
-                getRecipient.setText(number);
-                cursor.close();
 
+                if (getRecipient.getText().toString().matches("")) {
+                    getRecipient.setText(number);
+                }
+                else {
+                    getRecipient.append("," + number);
+                }
+
+                cursor.close();
             }
         }
     }
