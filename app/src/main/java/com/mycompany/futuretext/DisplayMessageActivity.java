@@ -1,5 +1,8 @@
 package com.mycompany.futuretext;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -16,8 +19,6 @@ public class DisplayMessageActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        //String messagePost = intent.getStringExtra(InputActivity.EXTRA_MESSAGEPOST);
         String messagePost = MessageLog.readFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES);
 
         TextView textview = new TextView(this);
@@ -27,8 +28,6 @@ public class DisplayMessageActivity extends ActionBarActivity {
         setContentView(textview);
 
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

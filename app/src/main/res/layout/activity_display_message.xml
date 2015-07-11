@@ -8,6 +8,7 @@
 
         <TextView android:id="@+id/archive"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#FBE9E7"/>
 
 </RelativeLayout>
