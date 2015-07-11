@@ -21,6 +21,7 @@ public class InputActivity extends ActionBarActivity {
     public final static String EXTRA_MESSAGEPOST = "com.mycompany.futuretext.MESSAGEPOST";
     public final static String EXTRA_RECIPIENT = "com.mycompany.futuretext.RECIPIENT";
     public final static String EXTRA_DATEANDTIME = "com.mycompany.futuretext.DATEANDTIME";
+    public final static String EXTRA_ID = "com.mycompany.futuretext.MESSAGEID";
 
     static final int PICK_CONTACT_REQUEST = 1; //request code
 
@@ -94,6 +95,7 @@ public class InputActivity extends ActionBarActivity {
         messageIntent.putExtra(EXTRA_MESSAGE, message);
         messageIntent.putExtra(EXTRA_RECIPIENT, recipient);
         messageIntent.putExtra(EXTRA_DATEANDTIME, when);
+        messageIntent.putExtra(EXTRA_ID, alarmIDString);
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this.getApplicationContext(), alarmID, messageIntent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
