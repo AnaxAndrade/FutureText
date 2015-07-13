@@ -11,4 +11,6 @@
     <string name="to_messagearchives">Archive</string>
     <string name="pick_contacts">pick from contacts</string>
     <string name="hello_world">Hello world!</string>
+
+    <string name="send_time">Set Time</string>
 </resources>

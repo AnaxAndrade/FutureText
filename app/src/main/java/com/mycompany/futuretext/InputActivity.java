@@ -2,17 +2,21 @@ package com.mycompany.futuretext;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.EditText;
 import android.view.View;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import java.util.Calendar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.database.Cursor;
 
@@ -23,12 +27,17 @@ public class InputActivity extends ActionBarActivity {
     public final static String EXTRA_DATEANDTIME = "com.mycompany.futuretext.DATEANDTIME";
     public final static String EXTRA_ID = "com.mycompany.futuretext.MESSAGEID";
 
-    static final int PICK_CONTACT_REQUEST = 1; //request code
+    static final int PICK_CONTACT_REQUEST = 1;//request code
+    static final int PICK_TIME_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
+
+        findViewsById();
+
+        setTime();
     }
 
     @Override
@@ -64,8 +73,8 @@ public class InputActivity extends ActionBarActivity {
         String recipient = getRecipient.getText().toString();
         EditText getMessage = (EditText) findViewById(R.id.get_message);
         String message = getMessage.getText().toString();
-        EditText getDateAndTime = (EditText) findViewById(R.id.get_date_and_time);
-        String when = getDateAndTime.getText().toString();
+        EditText getTime = (EditText) findViewById(R.id.time);
+        String when = getTime.getText().toString();
         String messagePost = ("To: " + recipient + "\n" + message + "\n" + when);
 
         //writes message post to archive file
@@ -139,4 +148,33 @@ public class InputActivity extends ActionBarActivity {
             }
         }
     }
+
+    //Everything below this comment is for showing the TimePickerDialog and getting it's time into the get_time EditText
+    TimePickerDialog timePickerDialog;
+    EditText getTime;
+
+    private void findViewsById() {
+
+        getTime = (EditText) findViewById(R.id.time);
+        getTime.setInputType(InputType.TYPE_NULL);
+    }
+
+    private void setTime() {
+
+        Calendar c = Calendar.getInstance();
+        timePickerDialog = new TimePickerDialog(this, new OnTimeSetListener() {
+
+            public void onTimeSet(TimePicker view, int hourOfTheDay, int minute) {
+
+                getTime.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
+            }
+
+        }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
+    }
+
+    public void showTimeDialog(View view) {
+        timePickerDialog.show();
+    }
+
+
 }
