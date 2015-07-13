@@ -35,9 +35,9 @@
         <EditText android:id="@+id/time"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:hint="@string/edit_dateTime"
+            android:hint="@string/edit_time"
             android:singleLine="true"
-            android:nextFocusDown="@+id/get_message"/>
+            android:nextFocusDown="@+id/date"/>
         <ImageButton
             android:id="@+id/get_time"
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:background="@color/Background"
             android:onClick="showTimeDialog"/>
     </RelativeLayout>
-    <!--RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
@@ -58,7 +58,8 @@
         <EditText android:id="@+id/date"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:hint="@string/edit_dateTime"
+            android:hint="@string/edit_date"
+            android:inputType="date"
             android:singleLine="true"
             android:nextFocusDown="@+id/get_message"/>
         <ImageButton
@@ -71,8 +72,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@color/Background"
-            android:onClick="showTimeDialog"/>
-    </RelativeLayout-->
+            android:onClick="showDateDialog"/>
+    </RelativeLayout>
 
 
     <EditText android:id="@+id/get_message"

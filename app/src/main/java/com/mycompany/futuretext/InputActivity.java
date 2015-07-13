@@ -1,6 +1,7 @@
 package com.mycompany.futuretext;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.view.View;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -38,6 +40,7 @@ public class InputActivity extends ActionBarActivity {
         findViewsById();
 
         setTime();
+        setDate();
     }
 
     @Override
@@ -74,21 +77,24 @@ public class InputActivity extends ActionBarActivity {
         EditText getMessage = (EditText) findViewById(R.id.get_message);
         String message = getMessage.getText().toString();
         EditText getTime = (EditText) findViewById(R.id.time);
-        String when = getTime.getText().toString();
-        String messagePost = ("To: " + recipient + "\n" + message + "\n" + when);
+        String time = getTime.getText().toString();
+        EditText getDate = (EditText) findViewById(R.id.date);
+        String date = getDate.getText().toString();
+        String messagePost = ("To: " + recipient + "\n" + message + "\n" + time);
 
         //writes message post to archive file
         MessageLog.toFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES, messagePost);
 
+        //parses date input
+        String[] dateValues = date.split("/");
+        int month = Integer.parseInt(dateValues[0]);
+        int day = Integer.parseInt(dateValues[1]);
+        int year = Integer.parseInt(dateValues[2]);
+
         //parses time input
-        char[] hourChars = new char[2];
-        char[] minuteChars = new char[2];
-        when.getChars(0,2,hourChars,0);
-        when.getChars(3, when.length(), minuteChars, 0);
-        String hourString =  new StringBuilder().append(hourChars[0]).append(hourChars[1]).toString();
-        String minuteString = new StringBuilder().append(minuteChars[0]).append(minuteChars[1]).toString();
-        int hour = Integer.parseInt(hourString);
-        int minute = Integer.parseInt(minuteString);
+        String[] timeValues = time.split(":");
+        int hour = Integer.parseInt(timeValues[0]);
+        int minute = Integer.parseInt(timeValues[1]);
 
         Calendar c = Calendar.getInstance();
         //creates unique id for the alarm manager so separate messages stay separate
@@ -97,20 +103,23 @@ public class InputActivity extends ActionBarActivity {
 
         //sets calendar to parsed time input
         c.setTimeInMillis(System.currentTimeMillis());
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);
 
         Intent messageIntent = new Intent(this, AlarmReceiver.class);
         messageIntent.putExtra(EXTRA_MESSAGE, message);
         messageIntent.putExtra(EXTRA_RECIPIENT, recipient);
-        messageIntent.putExtra(EXTRA_DATEANDTIME, when);
+        messageIntent.putExtra(EXTRA_DATEANDTIME, time);
         messageIntent.putExtra(EXTRA_ID, alarmIDString);
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this.getApplicationContext(), alarmID, messageIntent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), alarmIntent); //schedules alarm manager for preset time via Calendar c
 
-        Toast.makeText(this,("text scheduled for " + hourString + ":" + minuteString), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,("text scheduled for " + hour + ":" + minute), Toast.LENGTH_LONG).show();
     }
 
     //Allows user to access contacts to choose a phone number
@@ -149,14 +158,17 @@ public class InputActivity extends ActionBarActivity {
         }
     }
 
-    //Everything below this comment is for showing the TimePickerDialog and getting it's time into the get_time EditText
+    //Everything below this comment is for showing the TimePickerDialog and getting it's time into the time EditText
     TimePickerDialog timePickerDialog;
-    EditText getTime;
+    EditText time;
 
     private void findViewsById() {
 
-        getTime = (EditText) findViewById(R.id.time);
-        getTime.setInputType(InputType.TYPE_NULL);
+        time = (EditText) findViewById(R.id.time);
+        time.setInputType(InputType.TYPE_NULL);
+
+        date = (EditText) findViewById(R.id.date);
+        date.setInputType(InputType.TYPE_NULL);
     }
 
     private void setTime() {
@@ -166,7 +178,7 @@ public class InputActivity extends ActionBarActivity {
 
             public void onTimeSet(TimePicker view, int hourOfTheDay, int minute) {
 
-                getTime.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
+                time.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
             }
 
         }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
@@ -176,5 +188,26 @@ public class InputActivity extends ActionBarActivity {
         timePickerDialog.show();
     }
 
+    //Everything below this comment is for showing DatePickerDialog and getting its date into the date EditText
+
+    DatePickerDialog datePickerDialog;
+    EditText date;
+
+    private void setDate() {
+
+        Calendar c = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                date.setText(Integer.toString(monthOfYear) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
+            }
+
+        }, c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.YEAR));
+    }
+
+    public void showDateDialog(View view) {
+        datePickerDialog.show();
+    }
 
 }
