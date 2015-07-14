@@ -21,6 +21,7 @@ import java.util.Calendar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.database.Cursor;
+import java.util.Date;
 
 public class InputActivity extends ActionBarActivity {
     public final static String EXTRA_MESSAGE = "com.mycompany.futuretext.MESSAGE";
@@ -213,6 +214,12 @@ public class InputActivity extends ActionBarActivity {
     }
 
     public void showDateDialog(View view) {
+
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        datePickerDialog.updateDate(year,month,day);
         datePickerDialog.show();
     }
 
