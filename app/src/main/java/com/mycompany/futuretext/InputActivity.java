@@ -80,14 +80,14 @@ public class InputActivity extends ActionBarActivity {
         String time = getTime.getText().toString();
         EditText getDate = (EditText) findViewById(R.id.date);
         String date = getDate.getText().toString();
-        String messagePost = ("To: " + recipient + "\n" + message + "\n" + time);
+        String messagePost = ("To: " + recipient + "\n" + message + "\n" + time + " " + date);
 
         //writes message post to archive file
         MessageLog.toFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES, messagePost);
 
         //parses date input
         String[] dateValues = date.split("/");
-        int month = Integer.parseInt(dateValues[0]);
+        int month = Integer.parseInt(dateValues[0]) - 1;
         int day = Integer.parseInt(dateValues[1]);
         int year = Integer.parseInt(dateValues[2]);
 
@@ -119,7 +119,7 @@ public class InputActivity extends ActionBarActivity {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), alarmIntent); //schedules alarm manager for preset time via Calendar c
 
-        Toast.makeText(this,("text scheduled for " + hour + ":" + minute), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,("text scheduled for " + time + " " + date), Toast.LENGTH_LONG).show();
     }
 
     //Allows user to access contacts to choose a phone number
@@ -178,7 +178,13 @@ public class InputActivity extends ActionBarActivity {
 
             public void onTimeSet(TimePicker view, int hourOfTheDay, int minute) {
 
-                time.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
+                if (minute < 10) {
+                    String minuteString = "0" + Integer.toString(minute);
+                    time.setText(Integer.toString(hourOfTheDay) + ":" + minuteString);
+                }
+                else {
+                    time.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
+                }
             }
 
         }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
@@ -200,7 +206,7 @@ public class InputActivity extends ActionBarActivity {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                date.setText(Integer.toString(monthOfYear) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
+                date.setText(Integer.toString(monthOfYear + 1) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
             }
 
         }, c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.YEAR));
