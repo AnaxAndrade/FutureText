@@ -21,9 +21,9 @@ import java.util.Calendar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.database.Cursor;
-import java.util.Date;
 
 public class InputActivity extends ActionBarActivity {
+
     public final static String EXTRA_MESSAGE = "com.mycompany.futuretext.MESSAGE";
     public final static String EXTRA_MESSAGEPOST = "com.mycompany.futuretext.MESSAGEPOST";
     public final static String EXTRA_RECIPIENT = "com.mycompany.futuretext.RECIPIENT";
@@ -31,7 +31,11 @@ public class InputActivity extends ActionBarActivity {
     public final static String EXTRA_ID = "com.mycompany.futuretext.MESSAGEID";
 
     static final int PICK_CONTACT_REQUEST = 1;//request code
-    static final int PICK_TIME_REQUEST = 2;
+
+    EditText getRecipient;
+    EditText getDate;
+    EditText getTime;
+    EditText getMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +73,26 @@ public class InputActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void findViewsById() {
+
+        getRecipient = (EditText) findViewById(R.id.get_recipients);
+
+        getTime = (EditText) findViewById(R.id.time);
+        getTime.setInputType(InputType.TYPE_NULL);
+
+        getDate = (EditText) findViewById(R.id.date);
+        getDate.setInputType(InputType.TYPE_NULL);
+
+        getMessage = (EditText) findViewById(R.id.get_message);
+    }
+
     //called when user clicks send later button
     public void sendDelayedMessage(View view) {
 
         //gets data from input fields
-        EditText getRecipient = (EditText) findViewById(R.id.get_recipients);
         String recipient = getRecipient.getText().toString();
-        EditText getMessage = (EditText) findViewById(R.id.get_message);
         String message = getMessage.getText().toString();
-        EditText getTime = (EditText) findViewById(R.id.time);
         String time = getTime.getText().toString();
-        EditText getDate = (EditText) findViewById(R.id.date);
         String date = getDate.getText().toString();
         String messagePost = ("To: " + recipient + "\n" + message + "\n" + time + " " + date);
 
@@ -97,7 +110,9 @@ public class InputActivity extends ActionBarActivity {
         int hour = Integer.parseInt(timeValues[0]);
         int minute = Integer.parseInt(timeValues[1]);
 
+
         Calendar c = Calendar.getInstance();
+
         //creates unique id for the alarm manager so separate messages stay separate
         String alarmIDString = new StringBuilder().append(c.get(Calendar.HOUR)).append(c.get(Calendar.MINUTE)).append(c.get(Calendar.SECOND)).append(c.get(Calendar.MILLISECOND)).toString();
         int alarmID = Integer.parseInt(alarmIDString);
@@ -161,16 +176,6 @@ public class InputActivity extends ActionBarActivity {
 
     //Everything below this comment is for showing the TimePickerDialog and getting it's time into the time EditText
     TimePickerDialog timePickerDialog;
-    EditText time;
-
-    private void findViewsById() {
-
-        time = (EditText) findViewById(R.id.time);
-        time.setInputType(InputType.TYPE_NULL);
-
-        date = (EditText) findViewById(R.id.date);
-        date.setInputType(InputType.TYPE_NULL);
-    }
 
     private void setTime() {
 
@@ -181,10 +186,10 @@ public class InputActivity extends ActionBarActivity {
 
                 if (minute < 10) {
                     String minuteString = "0" + Integer.toString(minute);
-                    time.setText(Integer.toString(hourOfTheDay) + ":" + minuteString);
+                    getTime.setText(Integer.toString(hourOfTheDay) + ":" + minuteString);
                 }
                 else {
-                    time.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
+                    getTime.setText(Integer.toString(hourOfTheDay) + ":" + Integer.toString(minute));
                 }
             }
 
@@ -196,9 +201,7 @@ public class InputActivity extends ActionBarActivity {
     }
 
     //Everything below this comment is for showing DatePickerDialog and getting its date into the date EditText
-
     DatePickerDialog datePickerDialog;
-    EditText date;
 
     private void setDate() {
 
@@ -207,7 +210,7 @@ public class InputActivity extends ActionBarActivity {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                date.setText(Integer.toString(monthOfYear + 1) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
+                getDate.setText(Integer.toString(monthOfYear + 1) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
             }
 
         }, c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.YEAR));
@@ -220,6 +223,7 @@ public class InputActivity extends ActionBarActivity {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         datePickerDialog.updateDate(year,month,day);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 
