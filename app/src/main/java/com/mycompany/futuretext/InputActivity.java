@@ -96,9 +96,6 @@ public class InputActivity extends ActionBarActivity {
         String date = getDate.getText().toString();
         String messagePost = ("To: " + recipient + "\n" + message + "\n" + time + " " + date);
 
-        //writes message post to archive file
-        MessageLog.toFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES, messagePost);
-
         //parses date input
         String[] dateValues = date.split("/");
         int month = Integer.parseInt(dateValues[0]) - 1;
@@ -109,7 +106,6 @@ public class InputActivity extends ActionBarActivity {
         String[] timeValues = time.split(":");
         int hour = Integer.parseInt(timeValues[0]);
         int minute = Integer.parseInt(timeValues[1]);
-
 
         Calendar c = Calendar.getInstance();
 
@@ -124,6 +120,17 @@ public class InputActivity extends ActionBarActivity {
         c.set(Calendar.DAY_OF_MONTH, day);
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);
+
+        Calendar now = Calendar.getInstance();
+        //this if stops the method if the time set is in the past
+        if(c.before(now)){
+
+            Toast.makeText(this,("You're using FutureText" + "\n" + "Please pick a time in the future!"), Toast.LENGTH_LONG).show();
+            return;//breaks out of method
+        }
+
+        //writes message post to archive file
+        MessageLog.toFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES, messagePost);
 
         Intent messageIntent = new Intent(this, AlarmReceiver.class);
         messageIntent.putExtra(EXTRA_MESSAGE, message);
