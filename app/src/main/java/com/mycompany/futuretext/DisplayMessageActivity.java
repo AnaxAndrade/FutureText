@@ -1,31 +1,37 @@
 package com.mycompany.futuretext;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
-import android.content.Intent;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 public class DisplayMessageActivity extends ActionBarActivity {
 
-
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String messagePost = MessageLog.readFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES);
+        setContentView(R.layout.activity_display_message);
+        listView = (ListView) findViewById(R.id.archive);
 
-        TextView textview = new TextView(this);
-        textview.setTextSize(20);
-        textview.setText(messagePost);
-        textview.setMovementMethod(new ScrollingMovementMethod());
-        setContentView(textview);
+        String messagePost = MessageLog.readFile(this.getApplicationContext(), MessageLog.STORED_MESSAGES);
+        String[] messages = messagePost.split("To: ");
+
+        String[] temp = new String[messages.length];
+
+        for (int i = 0; i < messages.length ; i++) {
+
+            temp[i] = messages[messages.length - (i + 1)];
+        }
+
+        messages = temp;
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, messages);
+        listView.setAdapter(adapter);
 
     }
 
