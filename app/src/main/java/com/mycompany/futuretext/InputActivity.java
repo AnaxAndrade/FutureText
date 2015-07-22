@@ -1,7 +1,6 @@
 package com.mycompany.futuretext;
 
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -10,19 +9,28 @@ import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.view.View;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.graphics.drawable.Drawable;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.database.Cursor;
+import android.text.style.ImageSpan;
+import android.text.SpannableString;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 public class InputActivity extends ActionBarActivity {
+
+    Context context;
 
     public final static String EXTRA_MESSAGE = "com.mycompany.futuretext.MESSAGE";
     public final static String EXTRA_MESSAGEPOST = "com.mycompany.futuretext.MESSAGEPOST";
@@ -30,7 +38,9 @@ public class InputActivity extends ActionBarActivity {
     public final static String EXTRA_DATEANDTIME = "com.mycompany.futuretext.DATEANDTIME";
     public final static String EXTRA_ID = "com.mycompany.futuretext.MESSAGEID";
 
-    static final int PICK_CONTACT_REQUEST = 1;//request code
+    //request codes
+    static final int PICK_CONTACT_REQUEST = 1;
+    static final int PICK_ATTACHMENT_REQUEST = 2;
 
     EditText getRecipient;
     EditText getDate;
@@ -167,7 +177,6 @@ public class InputActivity extends ActionBarActivity {
                 cursor.moveToFirst();
                 int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
                 String number = cursor.getString(column);
-                EditText getRecipient = (EditText) findViewById(R.id.get_recipients);
 
                 if (getRecipient.getText().toString().matches("")) {
                     getRecipient.setText(number);
@@ -179,6 +188,28 @@ public class InputActivity extends ActionBarActivity {
                 cursor.close();
             }
         }
+
+        /*if (requestCode == PICK_ATTACHMENT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+
+                try {
+
+                    Uri attachmentUri = data.getData();
+                    InputStream inputStream = context.getContentResolver().openInputStream(attachmentUri);
+                    Drawable drawable = Drawable.createFromStream(inputStream, attachmentUri.toString());
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                    ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+                    SpannableString s = new SpannableString("abc\n");
+                    s.setSpan(span, 0, 3, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                    getMessage.setText(s);
+
+                }
+                catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }*/
     }
 
     //Everything below this comment is for showing the TimePickerDialog and getting it's time into the time EditText
@@ -213,9 +244,9 @@ public class InputActivity extends ActionBarActivity {
     private void setDate() {
 
         Calendar c = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
 
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
                 getDate.setText(Integer.toString(monthOfYear + 1) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
             }
@@ -225,13 +256,16 @@ public class InputActivity extends ActionBarActivity {
 
     public void showDateDialog(View view) {
 
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        datePickerDialog.updateDate(year,month,day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        datePickerDialog.show();
+        datePickerDialog.setMinDate(Calendar.getInstance());
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
     }
 
+//    public void pickAttachment(View view) {
+//
+//        Intent getAttachmentIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        getAttachmentIntent.addCategory(Intent.CATEGORY_OPENABLE);
+//        getAttachmentIntent.setType("*/*");
+//        startActivityForResult(getAttachmentIntent, PICK_ATTACHMENT_REQUEST);
+//
+//    }
 }
