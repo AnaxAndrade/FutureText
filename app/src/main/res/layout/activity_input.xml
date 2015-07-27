@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.15">
         <EditText android:id="@+id/get_recipients"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -18,7 +18,9 @@
             android:id="@+id/search_contacts"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_menu_search"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:src="@drawable/ic_contacts_black_24dp"
             android:contentDescription="@string/pick_contacts"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -29,7 +31,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
         <EditText android:id="@+id/date"
             android:layout_width="fill_parent"
@@ -42,7 +44,9 @@
             android:id="@+id/get_date"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_menu_search"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:src="@drawable/ic_today_black_24dp"
             android:contentDescription="@string/pick_contacts"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -53,7 +57,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
         <EditText android:id="@+id/time"
             android:layout_width="fill_parent"
@@ -65,7 +69,9 @@
             android:id="@+id/get_time"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_menu_search"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:src="@drawable/ic_schedule_black_24dp"
             android:contentDescription="@string/pick_contacts"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -85,17 +91,6 @@
             android:singleLine="true"
             android:inputType="textMultiLine"
             android:scrollbars="vertical"/>
-        <ImageButton
-            android:id="@+id/get_attachment"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_menu_search"
-            android:contentDescription="@string/pick_contacts"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@color/Background"
-            android:onClick=""/>
     </RelativeLayout>
     <Button android:id="@+id/sendLater"
         android:layout_width="fill_parent"
