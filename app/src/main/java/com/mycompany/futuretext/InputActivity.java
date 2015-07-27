@@ -14,6 +14,7 @@ import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.view.View;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -26,7 +27,7 @@ import android.widget.Toast;
 import android.database.Cursor;
 import android.text.style.ImageSpan;
 import android.text.SpannableString;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import android.app.DatePickerDialog;
 
 public class InputActivity extends ActionBarActivity {
 
@@ -244,9 +245,9 @@ public class InputActivity extends ActionBarActivity {
     private void setDate() {
 
         Calendar c = Calendar.getInstance();
-        datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                 getDate.setText(Integer.toString(monthOfYear + 1) + "/" + Integer.toString(dayOfMonth) + "/" + Integer.toString(year));
             }
@@ -256,8 +257,13 @@ public class InputActivity extends ActionBarActivity {
 
     public void showDateDialog(View view) {
 
-        datePickerDialog.setMinDate(Calendar.getInstance());
-        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        datePickerDialog.updateDate(year,month,day);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        datePickerDialog.show();
     }
 
 //    public void pickAttachment(View view) {

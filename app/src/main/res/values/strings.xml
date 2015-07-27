@@ -12,6 +12,9 @@
     <string name="to_messagearchives">Archive</string>
     <string name="pick_contacts">pick from contacts</string>
     <string name="hello_world">Hello world!</string>
+    <string name="delete_pending_message">Delete</string>
+    <string name="dont_delete_pending_message">Cancel</string>
+    <string name="delete_dialog">Would you like to delete this pending message?</string>
 
     <string name="send_time">Set Time</string>
 </resources>

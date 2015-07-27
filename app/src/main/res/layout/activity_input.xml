@@ -23,7 +23,6 @@
             android:src="@drawable/ic_contacts_black_24dp"
             android:contentDescription="@string/pick_contacts"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@color/Background"
             android:onClick="pickContact"/>
@@ -49,7 +48,6 @@
             android:src="@drawable/ic_today_black_24dp"
             android:contentDescription="@string/pick_contacts"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@color/Background"
             android:onClick="showDateDialog"/>
@@ -74,7 +72,6 @@
             android:src="@drawable/ic_schedule_black_24dp"
             android:contentDescription="@string/pick_contacts"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@color/Background"
             android:onClick="showTimeDialog"/>
@@ -97,5 +94,6 @@
         android:layout_height="wrap_content"
         android:text="@string/button_sendLater"
         android:background="@color/ActionBar"
+        android:textColor="#FFFFFF"
         android:onClick="sendDelayedMessage"/>
 </LinearLayout>
