@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FBE9E7"
     tools:context="com.mycompany.futuretext.DisplayMessageActivity">
 
         <ListView android:id="@+id/archive"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#FBE9E7"/>
+            android:background="#FBE9E7"
+            android:clickable="true"
+            />
 
 </LinearLayout>

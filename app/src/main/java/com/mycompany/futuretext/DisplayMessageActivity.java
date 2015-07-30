@@ -1,11 +1,13 @@
 package com.mycompany.futuretext;
 
+import android.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
+import android.view.View;
+import android.widget.AdapterView;
 
 public class DisplayMessageActivity extends ActionBarActivity {
 
@@ -30,8 +32,17 @@ public class DisplayMessageActivity extends ActionBarActivity {
 
         messages = temp;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, messages);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, messages);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                DialogFragment fragment = DeleteDialogFragment.newInstance(R.string.delete_dialog);
+                fragment.show(getFragmentManager(), "dialog");
+            }
+        });
 
     }
 
@@ -48,5 +59,20 @@ public class DisplayMessageActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void showDeleteDialog(View view) {
+
+        DialogFragment fragment = DeleteDialogFragment.newInstance(R.string.delete_dialog);
+        fragment.show(getFragmentManager(), "dialog");
+    }
+
+    public void deletePendingMessage() {
+
+    }
+
+    public void dontDeletePendingMessage() {
+
     }
 }
