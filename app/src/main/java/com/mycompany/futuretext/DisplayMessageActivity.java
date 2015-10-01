@@ -36,14 +36,14 @@ public class DisplayMessageActivity extends ActionBarActivity {
         listView.setAdapter(adapter);
 
         //Will show a delete dialog without any functionality
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                DialogFragment fragment = DeleteDialogFragment.newInstance(R.string.delete_dialog);
-                fragment.show(getFragmentManager(), "dialog");
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                DialogFragment fragment = DeleteDialogFragment.newInstance(R.string.delete_dialog);
+//                fragment.show(getFragmentManager(), "dialog");
+//            }
+//        });
 
     }
 
