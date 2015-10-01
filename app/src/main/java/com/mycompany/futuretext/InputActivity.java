@@ -31,17 +31,13 @@ import android.app.DatePickerDialog;
 
 public class InputActivity extends ActionBarActivity {
 
-    Context context;
-
     public final static String EXTRA_MESSAGE = "com.mycompany.futuretext.MESSAGE";
     public final static String EXTRA_MESSAGEPOST = "com.mycompany.futuretext.MESSAGEPOST";
     public final static String EXTRA_RECIPIENT = "com.mycompany.futuretext.RECIPIENT";
     public final static String EXTRA_DATEANDTIME = "com.mycompany.futuretext.DATEANDTIME";
     public final static String EXTRA_ID = "com.mycompany.futuretext.MESSAGEID";
 
-    //request codes
     static final int PICK_CONTACT_REQUEST = 1;
-    static final int PICK_ATTACHMENT_REQUEST = 2;
 
     EditText getRecipient;
     EditText getDate;
@@ -107,13 +103,13 @@ public class InputActivity extends ActionBarActivity {
         String date = getDate.getText().toString();
         String messagePost = ("To: " + recipient + "\n" + message + "\n" + time + " " + date);
 
-        //parses date input
+        //gets date input
         String[] dateValues = date.split("/");
         int month = Integer.parseInt(dateValues[0]) - 1;
         int day = Integer.parseInt(dateValues[1]);
         int year = Integer.parseInt(dateValues[2]);
 
-        //parses time input
+        //gets time input
         String[] timeValues = time.split(":");
         int hour = Integer.parseInt(timeValues[0]);
         int minute = Integer.parseInt(timeValues[1]);
@@ -189,28 +185,6 @@ public class InputActivity extends ActionBarActivity {
                 cursor.close();
             }
         }
-
-        /*if (requestCode == PICK_ATTACHMENT_REQUEST) {
-            if (resultCode == RESULT_OK) {
-
-                try {
-
-                    Uri attachmentUri = data.getData();
-                    InputStream inputStream = context.getContentResolver().openInputStream(attachmentUri);
-                    Drawable drawable = Drawable.createFromStream(inputStream, attachmentUri.toString());
-                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                    ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
-                    SpannableString s = new SpannableString("abc\n");
-                    s.setSpan(span, 0, 3, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                    getMessage.setText(s);
-
-                }
-                catch (FileNotFoundException e){
-                    e.printStackTrace();
-                }
-
-            }
-        }*/
     }
 
     //Everything below this comment is for showing the TimePickerDialog and getting it's time into the time EditText
@@ -265,13 +239,4 @@ public class InputActivity extends ActionBarActivity {
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
-
-//    public void pickAttachment(View view) {
-//
-//        Intent getAttachmentIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//        getAttachmentIntent.addCategory(Intent.CATEGORY_OPENABLE);
-//        getAttachmentIntent.setType("*/*");
-//        startActivityForResult(getAttachmentIntent, PICK_ATTACHMENT_REQUEST);
-//
-//    }
 }

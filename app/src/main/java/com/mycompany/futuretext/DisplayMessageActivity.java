@@ -35,6 +35,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, messages);
         listView.setAdapter(adapter);
 
+        //Will show a delete dialog without any functionality
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,18 +62,18 @@ public class DisplayMessageActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void showDeleteDialog(View view) {
-
-        DialogFragment fragment = DeleteDialogFragment.newInstance(R.string.delete_dialog);
-        fragment.show(getFragmentManager(), "dialog");
-    }
-
-    public void deletePendingMessage() {
-
-    }
-
-    public void dontDeletePendingMessage() {
-
-    }
+//  All this will be used to delete pending messages
+//    public void showDeleteDialog(View view) {
+//
+//        DialogFragment fragment = DeleteDialogFragment.newInstance(R.string.delete_dialog);
+//        fragment.show(getFragmentManager(), "dialog");
+//    }
+//
+//    public void deletePendingMessage() {
+//
+//    }
+//
+//    public void dontDeletePendingMessage() {
+//
+//    }
 }
